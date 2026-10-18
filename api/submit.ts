@@ -144,9 +144,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       // при ошибке доступа Apps Script отвечает html-страницей, а не json
       const text = await upstream.text();
-      const data = safeParse(text) as { ok?: boolean; number?: string } | null;
+      const data = safeParse(text) as { ok?: boolean; number?: string; error?: string } | null;
       if (!upstream.ok || !data?.ok) {
-        throw new Error(`apps script ${upstream.status}: ${text.slice(0, 200)}`);
+        console.error(`submit: apps script ${upstream.status}: ${text.slice(0, 200)}`);
+        // сам скрипт ответил отказом — чаще всего не совпадает секрет
+        const rejected = data?.error === 'forbidden';
+        return res.status(502).json({
+          ok: false,
+          error: rejected ? 'upstream_rejected' : 'upstream_error',
+        });
       }
       return res.status(200).json({ ok: true, number: data.number ?? '' });
     } catch (error) {
@@ -158,8 +164,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
   const sheetName = process.env.SHEET_NAME || 'Ответы';
   if (!spreadsheetId) {
-    console.error('submit: GOOGLE_SHEET_ID is not set');
-    return res.status(500).json({ ok: false, error: 'server_error' });
+    // не задан ни APPS_SCRIPT_URL, ни переменные сервисного аккаунта
+    console.error('submit: ни APPS_SCRIPT_URL, ни GOOGLE_SHEET_ID не заданы');
+    return res.status(500).json({ ok: false, error: 'not_configured' });
   }
 
   try {

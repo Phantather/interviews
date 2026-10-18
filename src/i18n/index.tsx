@@ -7,6 +7,12 @@ export type Lang = 'ru' | 'ky';
 export type { TranslationKey, Dictionary };
 
 export const LANGS: Lang[] = ['ru', 'ky'];
+
+/**
+ * Подписи переключателя языка. Одинаковы при любом языке интерфейса:
+ * человек ищет свой язык, а не перевод его названия.
+ */
+export const LANG_LABELS: Record<Lang, string> = { ru: 'Рус.', ky: 'Кырг.' };
 export const LANG_STORAGE_KEY = 'naryn-lang';
 
 export const dictionaries: Record<Lang, Dictionary> = { ru, ky };

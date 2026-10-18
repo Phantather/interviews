@@ -1,4 +1,4 @@
-import { LANGS, useI18n, type Lang } from '../i18n';
+import { LANG_LABELS, LANGS, useI18n, type Lang } from '../i18n';
 import { THEME_CHOICES, type ThemeChoice } from '../theme';
 import { RidgeProgress } from './RidgeProgress';
 
@@ -47,7 +47,7 @@ export function Header({ fraction, counter, theme, onThemeChange }: Props) {
                   aria-pressed={lang === item}
                   onClick={() => setLang(item)}
                 >
-                  {item.toUpperCase()}
+                  {LANG_LABELS[item]}
                 </button>
               ))}
             </div>

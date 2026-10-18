@@ -140,6 +140,17 @@ body::before {
   fill: currentColor;
 }
 
+/* на узких экранах заголовок занимает свою строку, кнопки переносятся под него */
+@media (max-width: 430px) {
+  .header__title {
+    flex-basis: 100%;
+  }
+
+  .header__controls {
+    margin-left: auto;
+  }
+}
+
 .header__count {
   display: block;
   font-size: 14px;

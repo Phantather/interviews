@@ -14,8 +14,12 @@
 
 var SHEET_NAME = 'Ответы';
 
-/** Общий секрет: то же значение задайте в переменной APPS_SCRIPT_SECRET на Vercel. */
-var SECRET = 'TGdW19xJlZniT3s$Uz91FocAbGX2zTH2hRTmjUT5CjyWEBDQqS!0u!l$by42hS!Tm1axLyrdCHfqm&upb!Qt4jS0ctdOXQ@ojL5d0hC&&WBm0qjg@jtDXjR!474gn1';
+/**
+ * Общий секрет: то же значение задайте в переменной APPS_SCRIPT_SECRET.
+ * Только латинские буквы и цифры — символ $ в файле .env означает подстановку
+ * другой переменной, и значение с ним обрежется по первому $.
+ */
+var SECRET = 'замените-на-свою-строку-из-букв-и-цифр';
 
 var BASE_HEADERS = ['№ анкеты', 'Дата и время', 'Язык анкеты', 'Время заполнения, мин'];
 var MAX_VALUE_LENGTH = 5000;

@@ -67,8 +67,11 @@ function localApi(): Plugin {
 }
 
 export default defineConfig(({ mode }) => {
-  // переменные из .env.local нужны функции в process.env
-  Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
+  // переменные из .env нужны функции в process.env;
+  // уже заданные в окружении имеют приоритет — как и в обычном dotenv
+  for (const [key, value] of Object.entries(loadEnv(mode, process.cwd(), ''))) {
+    if (process.env[key] === undefined) process.env[key] = value;
+  }
 
   return {
     plugins: [react(), localApi()],

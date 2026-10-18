@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Анкета о питании</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    // Тема и язык применяются до первой отрисовки, чтобы не было мигания.
+    (function () {
+      try {
+        var theme = localStorage.getItem('naryn-theme') || 'system';
+        var dark = theme === 'dark' || (theme === 'system' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        document.documentElement.dataset.themeChoice = theme;
+
+        var url = new URLSearchParams(location.search).get('lang');
+        var lang = (url === 'ky' || url === 'ru') ? url : (localStorage.getItem('naryn-lang') || 'ru');
+        document.documentElement.setAttribute('lang', lang);
+      } catch (e) { /* приватный режим — остаёмся на значениях по умолчанию */ }
+    })();
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
